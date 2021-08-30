@@ -2,10 +2,25 @@ import React, {createContext} from 'react';
 
 export const GlobalData = createContext();
 
+const initialState = {
+    counter: 0
+}
+
+const reducer = (state, action) => {
+    if (action.type === 'INCREMENT') {
+        return {
+            ...state,
+            counter: state.counter + 1
+        }
+    }
+
+    return state;
+}
+
 const Provider = props => {
-    const [counter, setCounter] = React.useState(0);
+    const [state, dispatch] = React.useReducer(reducer, initialState)
     return (
-        <GlobalData.Provider value={{counter, setCounter}}>
+        <GlobalData.Provider value={{state, dispatch}}>
             {props.children}
         </GlobalData.Provider>
     )
